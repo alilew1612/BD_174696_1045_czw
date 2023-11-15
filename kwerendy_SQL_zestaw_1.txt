@@ -1,0 +1,41 @@
+Zadanie 1
+create table postac ( id_postaci int auto_increment, nazwa varchar(40), rodzaj enum('wiking','ptak','kobieta'), data_ur date, wiek int not null, primary key(id_postaci) );
+insert into postac (nazwa, rodzaj, data_ur, wiek) values ('Bjorn', 'wiking', '1971-06-25', 52);
+insert into postac (nazwa, rodzaj, data_ur, wiek) values ('Drozd', 'ptak', '2021-08-18', 2);
+insert into postac (nazwa, rodzaj, data_ur, wiek) values ('Tesciowa', 'kobieta', '1965-05-07', 58);
+update postac
+    -> set data_ur = '1935-05-07', wiek = 88
+    -> where id_postaci = 3;
+
+Zadanie 2
+create table walizka ( id_walizki int auto_increment primary key, pojemnosc int not null, kolor enum('rozowy','czerwony', 'teczowy', 'zolty'), id_wlasciciela int, foreign key(id_wlasciciela) references postac(id_postaci) on delete cascade );
+alter table walizka  alter kolor set default 'rozowy';
+insert into walizka (pojemnosc, kolor, id_wlasciciela) values(36, 'czerwony',1);
+insert into walizka (pojemnosc, id_wlasciciela) values(36, 3);
+
+Zadanie 3
+create table izba ( adres_budynku varchar(200), nazwa_izby varchar(200), metraz int not null, wlasciciel int, foreign key(wlasciciel) references postac(id_postaci), primary key(adres_budynku, nazwa_izby) );
+alter table izba add column kolor_izby varchar(50) after metraz set default 'czarny';
+insert into izba (adres_budynku, nazwa_izby, metraz, kolor_izby, wlasciciel) values ('chata wikinga', 'spizarnia', 30, 'bialy', 1);
+
+Zadanie 4
+create table przetwory (id_przetworu int primary key auto_increment, rok_produkcji year(4) default 1654, id_wykonawcy int, zawartosc varchar(100), dodatek varchar(100) default 'papryczka chili', id_konsumenta int, foreign key(id_wykonawcy) references postac(id_postaci), foreign key(id_konsumenta) references postac(id_postaci));
+INSERT INTO przetwory (zawartosc) VALUES ('bigos');
+
+Zadanie 5
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES ('Dum Dum', 'wiking', '1970-10-16', 53), ('Eivor', 'wiking', '1974-12-20', 48),
+('Randvi', 'wiking', '1977-04-04', 46), ('Raymond','wiking','1965-02-01',58), ('Alexios', 'wiking', '1989-09-25', 34);
+CREATE TABLE statek (nazwa_statku varchar(100) PRIMARY KEY, rodzaj_statku ENUM('towarowy', 'piracki', 'turystyczny'), data_wodowania date, max_ladownosc int unsigned not null);
+INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) VALUES ('kawka', 'piracki', '1999-03-07', 8865), ('Adrestia', 'piracki', '2006-02-09', 9871);
+Alter table postac add column funkcja varchar(100);
+UPDATE postac set funkcja = 'kapitan' where nazwa = 'Bjorn';
+alter TABLE postac add COLUMN nazwa_statku varchar(100), add FOREIGN KEY(nazwa_statku) REFERENCES statek(nazwa_statku);
+UPDATE postac set nazwa_statku = 'Adrestia' WHERE id_postaci = 1;
+UPDATE postac set nazwa_statku = 'Adrestia' WHERE id_postaci = 2;
+UPDATE postac set nazwa_statku = 'Adrestia' WHERE id_postaci = 4;
+UPDATE postac set nazwa_statku = 'kawka WHERE id_postaci = 5;
+UPDATE postac set nazwa_statku = 'kawka WHERE id_postaci = 6;
+UPDATE postac set nazwa_statku = 'kawka WHERE id_postaci = 7;
+UPDATE postac set nazwa_statku = 'kawka WHERE id_postaci = 8;
+DELETE from izba where nazwa_izby = 'spizarnia';
+drop TABLE izba;
