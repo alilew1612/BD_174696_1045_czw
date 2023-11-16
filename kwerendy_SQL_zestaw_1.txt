@@ -19,7 +19,7 @@ alter table izba add column kolor_izby varchar(50) after metraz set default 'cza
 insert into izba (adres_budynku, nazwa_izby, metraz, kolor_izby, wlasciciel) values ('chata wikinga', 'spizarnia', 30, 'bialy', 1);
 
 Zadanie 4
-create table przetwory (id_przetworu int primary key auto_increment, rok_produkcji year(4) default 1654, id_wykonawcy int, zawartosc varchar(100), dodatek varchar(100) default 'papryczka chili', id_konsumenta int, foreign key(id_wykonawcy) references postac(id_postaci), foreign key(id_konsumenta) references postac(id_postaci));
+create table przetwory (id_przetworu int primary key auto_increment, rok_produkcji int default 1654, id_wykonawcy int, zawartosc varchar(100), dodatek varchar(100) default 'papryczka chili', id_konsumenta int, foreign key(id_wykonawcy) references postac(id_postaci), foreign key(id_konsumenta) references postac(id_postaci));
 INSERT INTO przetwory (zawartosc) VALUES ('bigos');
 
 Zadanie 5
