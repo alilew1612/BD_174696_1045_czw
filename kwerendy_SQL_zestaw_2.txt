@@ -1,0 +1,41 @@
+Zad 1
+delete from postac where wiek = 58;
+delete from postac where wiek = 53;
+alter table przetwory drop foreign key przetwory_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table postac modify id_postaci int;
+alter table postac drop primary key;
+
+Zad 2
+alter table postac add column pesel varchar(11) unique;
+update postac set pesel = '74859632145' where id_postaci = 1;
+update postac set pesel = '63524102594' where id_postaci = 2;
+update postac set pesel = '35629041541' where id_postaci = 3;
+update postac set pesel = '56987405987' where id_postaci = 5;
+update postac set pesel = '98574698504' where id_postaci = 6;
+update postac set pesel = '75849632015' where id_postaci = 8;
+alter table postac add primary key(pesel);
+alter table postac modify column rodzaj enum ('wiking', 'kobieta', 'ptak', 'syrena') not null;
+insert into postac (id_postaci, nazwa, rodzaj, data_ur, wiek, pesel) values ('9', 'Gertruda Nieszczera', 'syrena', '1992-08-25', 31, '92698547125');
+
+Zad 3
+update postac set nazwa_statku = 'Adrestia' where nazwa like '%a%';
+update postac set nazwa_statku = null where nazwa like '%a';
+update statek set max_ladownosc = max_ladownosc * 0.7 where data_wodowania > '1900-01-01'  and data_wodowania < '2000-12-31';
+
+Zad 4
+insert into postac(id_postaci, nazwa, rodzaj, data_ur, wiek, pesel) values(10, 'Loko', 'waz', '2005-09-15', 18, '05963258741');
+create table Marynarz like postac;
+insert into Marynarz select * from postac where nazwa_statku = 'Adrestia' or nazwa_statku = 'kawka';
+alter table Marynarz add foreign key(nazwa_statku) references statek(nazwa_statku);
+
+Zad 5
+update Marynarz set nazwa_statku = null;
+delete from Marynarz where nazwa = 'Alexios';
+alter table postac drop foreign key postac_ibfk_1;
+alter table Marynarz drop foreign key Marynarz_ibfk_1;
+truncate table statek;
+drop table statek;
+create table zwierz(id_zwierza int auto_increment, nazwa varchar(100), wiek int, primary key(id_zwierza));
+insert into zwierz select id_postaci,  nazwa, wiek  from postac where rodzaj ='ptak' or rodzaj = 'waz';
